@@ -63,3 +63,13 @@ c.JupyterHub.services = [
 	},
 {% endif %}
 ]
+
+# Minimal Docker setup
+# use with https://github.com/thotypous/systemuser-nbgrader
+c.JupyterHub.spawner_class = 'dockerspawner.SystemUserSpawner'
+c.DockerSpawner.container_image = "systemuser-nbgrader"
+c.Spawner.mem_limit = '1G'
+c.DockerSpawner.volumes = {"/srv/nbgrader/exchange":"/srv/nbgrader/exchange"}
+c.DockerSpawner.remove_containers = True
+from IPython.utils.localinterfaces import public_ips
+c.JupyterHub.hub_ip = public_ips()[0]
